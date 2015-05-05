@@ -18,11 +18,10 @@ firstBlack :: State -> Maybe Int
 firstBlack = elemIndex Black
 
 isSolution :: State -> Bool
-isSolution state = case lastWhite state of
-  Nothing -> False
-  Just w -> case firstBlack state of
-    Nothing -> False
-    Just b -> w < b
+isSolution state = fromMaybe False $ do
+  w <- lastWhite state
+  b <- firstBlack state
+  return $ w < b
 
 inv :: State -> Int
 inv state = invInner 0 state where
